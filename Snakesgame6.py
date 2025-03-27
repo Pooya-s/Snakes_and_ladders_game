@@ -143,24 +143,21 @@ def generate_board_html(player_positions, snakes_and_ladders):
 
 st.title("Two-Player Snakes and Ladders: You vs Computer")
 
-# Reset Button
-if st.button("Reset Game"):
+# Define a reset function to reinitialize game state
+def reset_game():
     st.session_state.p1_position = 1
     st.session_state.p2_position = 1
     st.session_state.turn = "player"  # 'player' or 'computer'
     st.session_state.game_over = False
     st.session_state.message = ""
     st.session_state.winner = ""
-    st.experimental_rerun()
+
+# Create a Reset Game button that calls reset_game when clicked
+st.button("Reset Game", on_click=reset_game)
 
 # Initialize game state in session_state if not already set
 if "p1_position" not in st.session_state:
-    st.session_state.p1_position = 1
-    st.session_state.p2_position = 1
-    st.session_state.turn = "player"  # 'player' or 'computer'
-    st.session_state.game_over = False
-    st.session_state.message = ""
-    st.session_state.winner = ""
+    reset_game()
     st.session_state.snakes_and_ladders = {5: 7, 9: 27, 11: 29, 17: 4, 20: 6, 24: 16}
     st.session_state.board_size = 30
     st.session_state.terminal_state = 30
@@ -169,50 +166,51 @@ if "p1_position" not in st.session_state:
 info_placeholder = st.empty()
 board_placeholder = st.empty()
 
-# --- Game Loop ---
-if not st.session_state.game_over:
-    if st.session_state.turn == "player":
-        st.write("**Your Turn!** Choose your action:")
-        with st.form("player_form", clear_on_submit=True):
-            action = st.radio("Select an action:", options=[1, 2, 3], index=0)
-            submitted = st.form_submit_button("Make Move")
-        if submitted:
-            reward, new_pos, done = play_turn(
-                st.session_state.p1_position,
-                action,
-                st.session_state.snakes_and_ladders,
-                st.session_state.board_size,
-                st.session_state.terminal_state
-            )
-            st.session_state.p1_position = new_pos
-            st.session_state.message = f"You chose action {action} and moved to {new_pos} (Reward: {reward})."
-            if done:
-                st.session_state.game_over = True
-                st.session_state.winner = "You"
-            else:
-                st.session_state.turn = "computer"
-            st.experimental_rerun()
-    
-    elif st.session_state.turn == "computer":
-        st.write("**Computer's Turn...**")
-        # Computer uses the optimal policy
-        comp_action = optimal_policy(st.session_state.p2_position)
-        time.sleep(1)  # Pause for a moment to simulate thinking
+# --- Game Logic with Callbacks Instead of Forcing a Rerun ---
+
+# Player's Turn
+if not st.session_state.game_over and st.session_state.turn == "player":
+    st.write("**Your Turn!** Choose your action:")
+    with st.form("player_form", clear_on_submit=True):
+        action = st.radio("Select an action:", options=[1, 2, 3], index=0)
+        submitted = st.form_submit_button("Make Move")
+    if submitted:
         reward, new_pos, done = play_turn(
-            st.session_state.p2_position,
-            comp_action,
+            st.session_state.p1_position,
+            action,
             st.session_state.snakes_and_ladders,
             st.session_state.board_size,
             st.session_state.terminal_state
         )
-        st.session_state.p2_position = new_pos
-        st.session_state.message = f"Computer chose action {comp_action} and moved to {new_pos} (Reward: {reward})."
+        st.session_state.p1_position = new_pos
+        st.session_state.message = f"You chose action {action} and moved to {new_pos} (Reward: {reward})."
         if done:
             st.session_state.game_over = True
-            st.session_state.winner = "Computer"
+            st.session_state.winner = "You"
         else:
-            st.session_state.turn = "player"
-        st.experimental_rerun()
+            st.session_state.turn = "computer"
+        # No explicit rerun needed; Streamlit re-runs on interaction.
+
+# Computer's Turn
+if not st.session_state.game_over and st.session_state.turn == "computer":
+    st.write("**Computer's Turn...**")
+    time.sleep(1)  # Simulate thinking
+    comp_action = optimal_policy(st.session_state.p2_position)
+    reward, new_pos, done = play_turn(
+        st.session_state.p2_position,
+        comp_action,
+        st.session_state.snakes_and_ladders,
+        st.session_state.board_size,
+        st.session_state.terminal_state
+    )
+    st.session_state.p2_position = new_pos
+    st.session_state.message = f"Computer chose action {comp_action} and moved to {new_pos} (Reward: {reward})."
+    if done:
+        st.session_state.game_over = True
+        st.session_state.winner = "Computer"
+    else:
+        st.session_state.turn = "player"
+    # No explicit rerun here either.
 
 # --- Update the Display ---
 player_positions = {
