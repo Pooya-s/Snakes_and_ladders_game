@@ -171,8 +171,15 @@ board_placeholder = st.empty()
 # Player's Turn
 if not st.session_state.game_over and st.session_state.turn == "player":
     st.write("**Your Turn!** Choose your action:")
+    # Descriptive labels for each action
+    actions = {
+        1: "Action 1: Move exactly 1 step (Cost: -3)",
+        2: "Action 2: Move between 1 and 3 steps (Cost: -1)",
+        3: "Action 3: Move between 4 and 7 steps (Cost: -2)"
+    }
     with st.form("player_form", clear_on_submit=True):
-        action = st.radio("Select an action:", options=[1, 2, 3], index=0)
+        action = st.radio("Select an action:", options=list(actions.keys()),
+                          format_func=lambda x: actions[x])
         submitted = st.form_submit_button("Make Move")
     if submitted:
         reward, new_pos, done = play_turn(
@@ -183,13 +190,12 @@ if not st.session_state.game_over and st.session_state.turn == "player":
             st.session_state.terminal_state
         )
         st.session_state.p1_position = new_pos
-        st.session_state.message = f"You chose action {action} and moved to {new_pos} (Reward: {reward})."
+        st.session_state.message = f"You chose {actions[action]} and moved to {new_pos} (Reward: {reward})."
         if done:
             st.session_state.game_over = True
             st.session_state.winner = "You"
         else:
             st.session_state.turn = "computer"
-        # No explicit rerun needed; Streamlit re-runs on interaction.
 
 # Computer's Turn
 if not st.session_state.game_over and st.session_state.turn == "computer":
@@ -204,13 +210,12 @@ if not st.session_state.game_over and st.session_state.turn == "computer":
         st.session_state.terminal_state
     )
     st.session_state.p2_position = new_pos
-    st.session_state.message = f"Computer chose action {comp_action} and moved to {new_pos} (Reward: {reward})."
+    st.session_state.message = f"Computer chose Action {comp_action} and moved to {new_pos} (Reward: {reward})."
     if done:
         st.session_state.game_over = True
         st.session_state.winner = "Computer"
     else:
         st.session_state.turn = "player"
-    # No explicit rerun here either.
 
 # --- Update the Display ---
 player_positions = {
