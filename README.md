@@ -4,7 +4,7 @@
 This project is an interactive, web-based implementation of a modified Snakes and Ladders game built with Python and Streamlit. It pits a human player against a computer agent guided by a pre-computed Reinforcement Learning (RL) optimal policy. 
 
 ### Link_to_the_game
-since the streamlit deactivates the game when Idle, it probably wouln't work, you can clone and deploy it yourself, you might decide to improve it as well!!
+since the streamlit deactivates the game when Idle, it probably wouldn't work, you can clone and deploy it yourself, you might decide to improve it as well!!
 here goes nothing : https://snakesgame.streamlit.app/
 
 ## Features
