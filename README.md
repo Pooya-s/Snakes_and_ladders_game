@@ -31,7 +31,7 @@ Players must balance the cost of a move against the distance traveled.
 ## The Reinforcement Learning Agent
 
 
-The computer does not play randomly. It utilizes an `optimal_policy_dict` mapped to board states. This policy was likely generated offline using dynamic programming algorithms (like Value Iteration or Policy Iteration) to maximize the expected reward while navigating the stochastic nature of Actions 2 and 3 and the board's traps.
+The computer does not play randomly. It utilizes an `optimal_policy_dict` mapped to board states. The agent utilizes a pre-computed optimal_policy_dict mapped to all possible board states. This deterministic optimal policy was generated offline by formulating the environment as a Markov Decision Process (MDP) and applying the Value Iteration algorithm to maximize expected cumulative rewards over time.
 
 ## Installation & Execution
 
