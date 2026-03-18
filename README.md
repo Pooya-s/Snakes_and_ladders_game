@@ -34,8 +34,10 @@ Players must balance the cost of a move against the distance traveled.
 The agent does not play randomly. It utilizes a pre-computed `optimal_policy_dict` mapped to board states. This deterministic optimal policy was generated offline by formulating the environment as a Markov Decision Process (MDP) and applying the Value Iteration algorithm to maximize expected cumulative rewards over time.
 
 ## Installation & Execution
+Requires Python 3.7+ and Streamlit.
 
-1. **Prerequisites:** Ensure you have Python 3.7+ installed.
-2. **Install Streamlit:**
-   ```bash
-   pip install streamlit
+```bash
+git clone [https://github.com/Pooya-s/RL-Snakes-Ladders.git](https://github.com/Pooya-s/RL-Snakes-Ladders.git)
+cd RL-Snakes-Ladders
+pip install -r requirements.txt
+streamlit run app.py
