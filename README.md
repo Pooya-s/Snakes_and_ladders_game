@@ -26,7 +26,7 @@ Players must balance the cost of a move against the distance traveled.
 
 ### Board Layout
 * **Ladders:** Landing on 5, 9, 11, 20, or 24 advances the player forward.
-* **Snakes:** Landing on 17 sends the player backward (to 4).
+* **Snakes:** Landing on 17, 20, or 24 sends the player backward.
 
 ## The Reinforcement Learning Agent
 
