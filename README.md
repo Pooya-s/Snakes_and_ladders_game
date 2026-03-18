@@ -37,7 +37,7 @@ The agent does not play randomly. It utilizes a pre-computed `optimal_policy_dic
 Requires Python 3.7+ and Streamlit.
 
 ```bash
-git clone [https://github.com/Pooya-s/RL-Snakes-Ladders.git](https://github.com/Pooya-s/RL-Snakes-Ladders.git)
-cd RL-Snakes-Ladders
+git clone [https://github.com/Pooya-s/RL-Snakes-Ladders.git](https://github.com/Pooya-s/Snakes_and_ladders_game.git)
+cd Snakes_and_ladders_game
 pip install -r requirements.txt
 streamlit run app.py
