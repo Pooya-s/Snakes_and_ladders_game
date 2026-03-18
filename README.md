@@ -10,8 +10,7 @@ here goes nothing : https://snakesgame.streamlit.app/
 ## Features
 * **Interactive UI:** A custom HTML/CSS 5x6 grid board rendered dynamically within Streamlit, featuring visual indicators for players, snakes, and ladders.
 * **Strategic Gameplay:** Unlike traditional dice-rolling, players must choose between specific actions with varying risks and step ranges.
-* **AI Opponent:** The computer uses a pre-calculated optimal policy dictionary derived from a Markov Decision Process (MDP) to select the best possible move for any given state.
-
+* **AI Opponent:** The computer agent operates using a pre-calculated `optimal_policy_dict` mapped to all possible board states. This deterministic optimal policy was generated offline by formulating the stochastic game environment as a Markov Decision Process (MDP) and applying the Value Iteration algorithm to maximize expected cumulative rewards over time.
 ## Game Mechanics
 The objective is to reach exactly cell 30 (the terminal state). If a move pushes a player past 30, they bounce back to the start (cell 1) and incur a penalty.
 
