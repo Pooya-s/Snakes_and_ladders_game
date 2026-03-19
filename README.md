@@ -22,7 +22,7 @@ Players must balance the cost of a move against the distance traveled.
 | **Action 3** | Random (4 to 7 steps) | -2 |
 
 ### Board Layout
-* **Ladders:** Landing on 5, 9, 11, 20, or 24 advances the player forward.
+* **Ladders:** Landing on 5, 9, or 11 advances the player forward.
 * **Snakes:** Landing on 17, 20, or 24 sends the player backward.
 
 ## The Reinforcement Learning Agent
